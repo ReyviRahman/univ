@@ -1,9 +1,32 @@
 <?php
 
 use Livewire\Component;
+use Livewire\Attributes\Validate;
+use Illuminate\Support\Facades\Auth;
 
 new class extends Component {
-    //
+    #[Validate('required')]
+    public $username = '';
+
+    #[Validate('required')]
+    public $password = '';
+
+    public function login() {
+        $this->validate();
+
+        if (Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
+            session()->regenerate();
+
+            $role = Auth::user()->role;
+            return match ($role) {
+                'admin' => $this->redirect(route('admin.fakultas.index'), navigate:true),
+                'lecturer' => $this->redirect(route(''), navigate:true),
+                'student' => $this->redirect(route(''), navigate:true),
+            };
+        }
+
+        $this->addError('username', 'NIM/NIDN atau password salah.');
+    }
 };
 ?>
 
@@ -58,45 +81,45 @@ new class extends Component {
 
 
     <div class="flex items-center justify-center mt-auto ">
-        <flux:card class="space-y-6 min-w-96 mt-20 border-accent!">
-            @if (session('success'))
-                <div 
-                    x-data="{ show: true }"
-                    x-init="setTimeout(() => show = false, 3000)"
-                    x-show="show"
-                    x-transition.duration.500ms
-                    class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" 
-                    role="alert"
-                >
-                    <span class="font-medium">Berhasil!</span> {{ session('success') }}
-                </div>
-            @endif
-            <div>
-                <flux:heading size="lg">Log in to your account</flux:heading>
-                <flux:text class="mt-2">Welcome back!</flux:text>
-            </div>
-
-            <div class="space-y-6">
-                <flux:input label="Email" type="email" placeholder="Your email address" />
-
-                <flux:field>
-                    <div class="mb-3 flex justify-between">
-                        <flux:label>Password</flux:label>
-
-                        <flux:link href="#" variant="subtle" class="text-sm">Forgot password?</flux:link>
+        <form wire:submit='login'>
+            <flux:card class="space-y-6 min-w-96 mt-20 border-accent!">
+                @if (session('success'))
+                    <div 
+                        x-data="{ show: true }"
+                        x-init="setTimeout(() => show = false, 3000)"
+                        x-show="show"
+                        x-transition.duration.500ms
+                        class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" 
+                        role="alert"
+                    >
+                        <span class="font-medium">Berhasil!</span> {{ session('success') }}
                     </div>
-
-                    <flux:input type="password" placeholder="Your password" />
-
-                    <flux:error name="password" />
-                </flux:field>
-            </div>
-
-            <div class="space-y-2">
-                <flux:button variant="primary" class="w-full">Log in</flux:button>
-
-                <flux:button variant="ghost" class="w-full">Sign up for a new account</flux:button>
-            </div>
-        </flux:card>
+                @endif
+                <div>
+                    <flux:heading size="lg">Log in to your account</flux:heading>
+                    <flux:text class="mt-2">Welcome back!</flux:text>
+                </div>
+    
+                <div class="space-y-6">
+                    <flux:input label="Username" type="text" placeholder="Masukkan NIM/NIDN" wire:model='username' required />
+    
+                    <flux:field>
+                        <div class="mb-3 flex justify-between">
+                            <flux:label>Password</flux:label>
+    
+                            <flux:link href="#" variant="subtle" class="text-sm">Forgot password?</flux:link>
+                        </div>
+    
+                        <flux:input type="password" placeholder="Your password" wire:model='password' required />
+                        <flux:error name="password" />
+                    </flux:field>
+                </div>
+    
+                <div class="space-y-2">
+                    <flux:button variant="primary" class="w-full" type='submit' >Log in</flux:button>
+                    <flux:button variant="ghost" class="w-full">Sign up for a new account</flux:button>
+                </div>
+            </flux:card>
+        </form>
     </div>
 </div>
