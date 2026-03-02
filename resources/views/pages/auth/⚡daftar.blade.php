@@ -5,38 +5,7 @@ use Livewire\Attributes\Validate;
 use App\Models\User;
 
 new class extends Component {
-    #[Validate('required')] 
-    #[Validate('unique:users,nim', message: 'Nim ini sudah terdaftar, gunakan yang lain.')]
-    public $nim = '';
-
-    #[Validate('required')]
-    #[Validate('unique:users,email', message: 'Email ini sudah terdaftar, gunakan yang lain.')]
-    public $email = '';
-
-    #[Validate('required')]
-    public $name = '';
-
-    #[Validate('required')]
-    public $password = '';
-
-    #[Validate('required')]
-    public $prodi = '';
-
-    #[Validate('required')]
-    #[Validate('unique:users,phone', message: 'No HP ini sudah terdaftar, gunakan yang lain.')]
-    public $phone = '';
-
-    public function save() {
-        $this->validate();
-
-        User::create(
-            $this->only(['nim', 'email', 'name', 'password', 'prodi', 'phone'])
-        );
-
-        session()->flash('success', 'Akun Berhasil Dibuat Silakan Login.');
-
-        $this->redirect('/login');
-    }
+    
 };
 ?>
 
@@ -89,49 +58,48 @@ new class extends Component {
         </flux:sidebar.nav>
     </flux:sidebar>
 
-    <div class="mt-auto mx-4 sm:mx-20">
-        <form wire:submit='save'>
-            <flux:card class="space-y-6 w- mt-12 border-accent!">
-                <flux:heading size="lg" class="text-center font-bold!">Daftar</flux:heading>
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div class="space-y-6">
-                        <div>
-                            <flux:input label="NIM" type="text" placeholder="Masukkan NIM" wire:model='nim' required/>
-                        </div>
-                        <div>
-                            <flux:input label="Nama Lengkap" type="text" placeholder="Masukkan Nama Lengkap" wire:model='name' required/>
+    <div class="mt-auto mx-4 sm:mx-20" x-data="{ activeTab: 'student'}">
+        {{-- Header Judul --}}
+        <div class="mb-6 text-center">
+            <h1 class="text-3xl font-bold text-gray-800">Registrasi Pengguna Baru</h1>
+            <p class="text-gray-500">Silakan pilih jenis pengguna yang ingin didaftarkan</p>
+        </div>
 
-                        </div>
-                        <div>
-                            <flux:input label="Program Studi" type="text" placeholder="Masukkan Program Studi" wire:model='prodi' required/>
-                        </div>
-                    </div>
-                    <div class="space-y-6">
-                        <div>
-                            <flux:input label="Email" type="email" placeholder="Your email address" wire:model='email' required/>
+        {{-- BAGIAN TABS --}}
+        <div class="flex justify-center mb-6">
+            <div class="bg-white p-1 rounded-lg shadow-sm border inline-flex">
 
-                        </div>
-                        <div>
-                            <flux:input label="Password" type="password" placeholder="Password" wire:model='password' required/>
-                            
-                        </div>
-                        <div>
-                            <flux:input label="No HP" type="text" placeholder="Masukkan No HP" wire:model='phone' required/>
+                {{-- Tombol Tab Mahasiswa --}}
+                <button @click="activeTab = 'student'"
+                    :class="activeTab === 'student' ? 'bg-lime-400 text-white shadow-sm' : 'text-gray-600 hover:bg-lime-300' "
+                    class="px-6 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                    Mahasiswa Baru
 
-                        </div>
-                        
-                    </div>
-                    
-    
-                </div>
-    
-                <div class="grid grid-cols-2 gap-4 justify-end">
-                    <div class="space-y-2 col-start-2">
-                        <flux:button variant="primary" class="w-full block" type="submit" >Daftar</flux:button>
-                        <flux:button href="/login" wire:navigate class="w-full">Login</flux:button>
-                    </div>
-                </div>
-            </flux:card>
-        </form>
+                </button>
+
+                {{-- Tombol Tab Dosen --}}
+                <button @click="activeTab = 'lecturer'"
+                    :class="activeTab === 'lecturer' ? 'bg-lime-400 text-white shadow-sm' : 'text-gray-600 hover:bg-lime-300'"
+                    class="ml-1 px-6 py-2 rounded-md text-sm font-medium transition-colors duration-200">
+                    Dosen Baru
+                </button>
+            </div>
+        </div>
+
+        {{-- BAGIAN KONTEN FORM --}}
+        <div>
+
+            {{-- Logika Switching Component --}}
+            <div x-show="activeTab === 'student'" x-transition.opacity>
+                {{-- Kita load langsung, tapi disembunyikan jika tab bukan student --}}
+                <livewire:register.mahasiswa />
+            </div>
+
+            {{-- Form Dosen --}}
+            <div x-show="activeTab === 'lecturer'" x-transition.opacity style="display: none;">
+                <livewire:register.dosen />
+            </div>
+
+        </div>
     </div>
 </div>
