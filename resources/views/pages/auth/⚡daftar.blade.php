@@ -60,8 +60,8 @@ new class extends Component {
 
     <div class="mt-auto mx-4 sm:mx-20" x-data="{ activeTab: 'student'}">
         {{-- Header Judul --}}
-        <div class="mb-6 text-center">
-            <h1 class="text-3xl font-bold text-gray-800">Registrasi Pengguna Baru</h1>
+        <div class="mb-6 text-center mt-8">
+            <h1 class="text-3xl font-bold text-secondary">Registrasi Pengguna Baru</h1>
             <p class="text-gray-500">Silakan pilih jenis pengguna yang ingin didaftarkan</p>
         </div>
 

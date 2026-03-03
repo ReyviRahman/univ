@@ -13,6 +13,9 @@
     --color-accent-content: var(--color-lime-600);
     --color-accent-foreground: var(--color-lime-900);
 
+    --color-secondary: #118B50;
+
+
     --color-zinc-50: var(--color-slate-50);
     --color-zinc-100: var(--color-slate-100);
     --color-zinc-200: var(--color-slate-200);
