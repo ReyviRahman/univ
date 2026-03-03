@@ -46,14 +46,17 @@
             <flux:sidebar.item icon="information-circle" href="#">Help</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:dropdown position="top" align="start" class="max-lg:hidden">
-            <flux:sidebar.profile avatar="https://fluxui.dev/img/demo/user.png" name="Olivia Martin" />
+            <flux:sidebar.profile avatar="{{ asset('logo-web.png') }}" name="{{ auth()->user()->username }}" />
             <flux:menu>
                 <flux:menu.radio.group>
-                    <flux:menu.radio checked>Olivia Martin</flux:menu.radio>
+                    <flux:menu.radio checked>{{ auth()->user()->username }}</flux:menu.radio>
                     <flux:menu.radio>Truly Delta</flux:menu.radio>
                 </flux:menu.radio.group>
                 <flux:menu.separator />
-                <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+                <form method="POST" action="{{ route('logout') }}" >
+                    @csrf
+                    <flux:menu.item icon="arrow-right-start-on-rectangle" type="submit">Logout</flux:menu.item>
+                </form>
             </flux:menu>
         </flux:dropdown>
     </flux:sidebar>
@@ -64,14 +67,18 @@
             <flux:profile avatar="/img/demo/user.png" />
             <flux:menu>
                 <flux:menu.radio.group>
-                    <flux:menu.radio checked>Olivia Martin</flux:menu.radio>
+                    <flux:menu.radio checked>{{ auth()->user()->username }}</flux:menu.radio>
                     <flux:menu.radio>Truly Delta</flux:menu.radio>
                 </flux:menu.radio.group>
                 <flux:menu.separator />
-                <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+                <form method="POST" action="{{ route('logout') }}" >
+                    @csrf
+                    <flux:menu.item icon="arrow-right-start-on-rectangle">Logout</flux:menu.item>
+                </form>
             </flux:menu>
         </flux:dropdown>
     </flux:header>
+
     <flux:main>
         {{ $slot }}
     </flux:main>

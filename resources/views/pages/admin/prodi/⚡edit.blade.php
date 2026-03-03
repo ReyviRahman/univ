@@ -39,7 +39,7 @@ new #[Layout('layouts::admin')] class extends Component
         // 1. Cek dulu nama fakultas yang sedang dipilih sekarang
         $selectedFacultyName = null;
         if ($this->faculty_id) {
-            $selectedFacultyName = \App\Models\Faculty::find($this->faculty_id)?->name;
+            $selectedFacultyName = Faculty::find($this->faculty_id)?->name;
         }
 
         // 2. LOGIC BARU: 

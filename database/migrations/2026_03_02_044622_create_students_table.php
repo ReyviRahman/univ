@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('pob')->nullable(); // Tempat Lahir
             $table->date('dob')->nullable();   // Tanggal Lahir
-            $table->string('gender', 1);       // L/P
+            $table->enum('gender', ['L', 'P']);       // L/P
             $table->string('phone', 20)->nullable();
             $table->text('address')->nullable();
             $table->year('entry_year');        // Angkatan (2023, 2024)
