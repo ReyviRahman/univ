@@ -212,7 +212,7 @@ new class extends Component {
 };
 ?>
 
-<div class="flex min-h-full flex-col justify-center px-6  lg:px-8">
+<div class="flex min-h-full flex-col justify-center px-6 lg:px-8">
   <div class="">
     <form wire:submit='save' class="space-y-6">
       <div class="grid sm:grid-cols-2 grid-cols-1 gap-4">
@@ -395,7 +395,6 @@ new class extends Component {
             }"
         >
           <label for="prodi" class="block text-sm/6 font-medium text-secondary">Program Studi</label>
-          
           <div class="relative mt-2">
             {{-- INPUT SEARCH --}}
             <input 
@@ -692,10 +691,5 @@ new class extends Component {
         </div>
       </div>
     </form>
-
-    <p class="mt-10 text-center text-sm/6 text-gray-400">
-      Not a member?
-      <a href="#" class="font-semibold text-indigo-400 hover:text-indigo-300">Start a 14 day free trial</a>
-    </p>
   </div>
 </div>
