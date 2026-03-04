@@ -32,3 +32,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
 
   Route::livewire('/dashboard/admin/prodi/{department}/edit', 'pages::admin.prodi.edit')->name('admin.prodi.edit');
 });
+
+Route::middleware(['auth', 'dosen'])->group(function () {
+  Route::livewire('/dashboard/dosen/matkul', 'pages::dosen.matkul.index')->name('dosen.matkul.index');
+  Route::livewire('/dashboard/dosen/matkul/create', 'pages::dosen.matkul.create')->name('dosen.matkul.create');
+});

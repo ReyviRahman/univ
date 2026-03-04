@@ -9,51 +9,51 @@ use App\Models\Department;
 
 new class extends Component
 {
-    #[Validate('required')] 
-    #[Validate('unique:users,username', message: 'NIDN ini sudah terdaftar, gunakan yang lain.')]
-    public $nidn = '';
+	#[Validate('required')] 
+	#[Validate('unique:users,username', message: 'NIDN ini sudah terdaftar, gunakan yang lain.')]
+	public $nidn = '';
 
-    #[Validate('required')] 
-    public $email = '';
+	#[Validate('required')] 
+	public $email = '';
 
-    #[Validate('required')] 
-    public $password = '';
+	#[Validate('required')] 
+	public $password = '';
 
-    #[Validate('required|exists:departments,id', as: 'Prodi')]
-    public $department_id = '';
+	#[Validate('required|exists:departments,id', as: 'Prodi')]
+	public $department_id = '';
 
-    #[Validate('required')] 
-    public $name = '';
+	#[Validate('required')] 
+	public $name = '';
 
-    #[Validate('required', as: 'No HP')] 
-    public $phone = '';
-    
-    public function save() {
-			$this->validate();
-			try {
-				DB::transaction(function () {
-					$user = User::create([
-						'username' => $this->nidn,
-						'email' => $this->email,
-						'password' => $this->password,
-						'role' => 'lecturer',
-					]);
+	#[Validate('required', as: 'No HP')] 
+	public $phone = '';
+	
+	public function save() {
+		$this->validate();
+		try {
+			DB::transaction(function () {
+				$user = User::create([
+					'username' => $this->nidn,
+					'email' => $this->email,
+					'password' => $this->password,
+					'role' => 'lecturer',
+				]);
 
-					Lecturer::create([
-						'user_id' => $user->id,
-						'department_id' => $this->department_id,
-						'nidn' => $this->nidn,
-						'name' => $this->name,
-						'phone' => $this->phone,
-						'status' => 'active',
-					]);
-				});
-				session()->flash('success', 'Akun Berhasil Dibuat Silakan Login.');
-				$this->redirect('/login', navigate:true);
-			} catch (\Exception $e) {
-				session()->flash('error', $e->getMessage());
-			}
-    }
+				Lecturer::create([
+					'user_id' => $user->id,
+					'department_id' => $this->department_id,
+					'nidn' => $this->nidn,
+					'name' => $this->name,
+					'phone' => $this->phone,
+					'status' => 'active',
+				]);
+			});
+			session()->flash('success', 'Akun Berhasil Dibuat Silakan Login.');
+			$this->redirect('/login', navigate:true);
+		} catch (\Exception $e) {
+			session()->flash('error', $e->getMessage());
+		}
+	}
 
 	public $allDepartments;
   public function mount()
@@ -62,7 +62,6 @@ new class extends Component
         ->orderBy('name')
         ->get();
   }
-
 };
 ?>
 
