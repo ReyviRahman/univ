@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users'); // Relasi ke Login
+            $table->foreignId('user_id')->nullable()->constrained('users')->unique(); // Relasi ke Login
             $table->foreignId('department_id')->constrained('departments'); // Relasi ke Prodi
             $table->foreignId('advisor_id')->nullable()->constrained('lecturers'); // Dosen Wali (PA)
             $table->string('nim', 20)->unique();

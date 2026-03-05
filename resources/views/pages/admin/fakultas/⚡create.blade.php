@@ -13,7 +13,6 @@ new #[Layout('layouts::admin')] class extends Component
     #[Validate('required|string|unique:faculties,name', as: 'Nama Fakultas')]
     public $name = '';
 
-
     public function save() {
         $this->validate();
 
@@ -25,7 +24,6 @@ new #[Layout('layouts::admin')] class extends Component
         session()->flash('success', 'Fakultas Berhasil Ditambahkan');
         $this->redirect(route('admin.fakultas.index'), navigate:true);
     }
-
 };
 ?>
 

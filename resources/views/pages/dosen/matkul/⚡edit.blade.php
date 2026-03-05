@@ -4,10 +4,12 @@ use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use App\Models\Subject;
+use Illuminate\Validation\Rule;
 
 new #[Layout('layouts::dosen')] class extends Component
 {
-    #[Validate('required|unique:subjects,code', as: 'Kode Mata Kuliah')]
+    public Subject $subject;
+
     public $code = '';
 
     #[Validate('required')]
@@ -22,20 +24,40 @@ new #[Layout('layouts::dosen')] class extends Component
     #[Validate('required|boolean', as: "Status")]
     public $is_active = 1;
 
+    public function rules()
+    {
+        return [
+            'code' => [
+                'required',
+                Rule::unique('subjects', 'code')->ignore($this->subject->id),
+            ]
+        ];
+    }
+
+    public function mount(Subject $subject)
+    {
+        $this->subject = $subject;
+
+        $this->code = $subject->code;
+        $this->name = $subject->name;
+        $this->sks = $subject->sks;
+        $this->semester = $subject->semester;
+        $this->is_active = $subject->is_active;
+    }
+
     public function save()
     {
         $this->validate();
 
-        Subject::create([
-            'department_id' => auth()->user()->lecturer->department_id,
+        $this->subject->update([
             'code' => $this->code,
             'name' => $this->name,
             'sks' => $this->sks,
             'semester' => $this->semester,
             'is_active' => $this->is_active,
-        ]);
+        ]); 
 
-        session()->flash('success', 'Mata Kuliah Berhasil Ditambahkan');
+        session()->flash('success', 'Mata Kuliah Berhasil Diubah');
         $this->redirect(route('dosen.matkul.index'), navigate:true);
     }
 };
@@ -44,10 +66,10 @@ new #[Layout('layouts::dosen')] class extends Component
 <div>
     <flux:breadcrumbs>
         <flux:breadcrumbs.item href="{{ route('dosen.matkul.index') }}" wire:navigate >Mata Kuliah</flux:breadcrumbs.item>
-        <flux:breadcrumbs.item>Tambah Mata Kuliah</flux:breadcrumbs.item>
+        <flux:breadcrumbs.item>Edit Mata Kuliah</flux:breadcrumbs.item>
     </flux:breadcrumbs>
 
-    <flux:heading class='text-center mb-5' size='xl' level='3' >Tambah Mata Kuliah</flux:heading>
+    <flux:heading class='text-center mb-5' size='xl' level='3' >Edit Mata Kuliah</flux:heading>
 
     <form wire:submit='save' class="space-y-6">
         <div class="grid sm:grid-cols-2 grid-cols-1 gap-4">

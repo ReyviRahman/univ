@@ -24,20 +24,12 @@
         </flux:sidebar.header>
         <flux:sidebar.nav>
             <flux:sidebar.item 
-                icon="university" 
-                href="{{ route('admin.fakultas.index') }}" 
-                :current="request()->routeIs('admin.fakultas.*')"
+                icon="library-big" 
+                href="{{ route('dosen.matkul.index') }}" 
+                :current="request()->routeIs('dosen.matkul.*')"
                 wire:navigate
             >
-                Fakultas
-            </flux:sidebar.item>
-            <flux:sidebar.item 
-                icon="building-library" 
-                href="{{ route('admin.prodi.index') }}" 
-                :current="request()->routeIs('admin.prodi.*')"
-                wire:navigate
-            >
-                Program Studi
+                Mata Kuliah
             </flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:sidebar.spacer />
@@ -46,11 +38,11 @@
             <flux:sidebar.item icon="information-circle" href="#">Help</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:dropdown position="top" align="start" class="max-lg:hidden">
-            <flux:sidebar.profile avatar="{{ asset('logo-web.png') }}" name="{{ auth()->user()->username }}" />
+            <flux:sidebar.profile avatar="{{ asset('logo-web.png') }}" name="{{ auth()->user()->lecturer->name }}" />
             <flux:menu>
                 <flux:menu.radio.group>
-                    <flux:menu.radio checked>{{ auth()->user()->username }}</flux:menu.radio>
-                    <flux:menu.radio>Truly Delta</flux:menu.radio>
+                    <flux:menu.radio>{{ auth()->user()->lecturer->name }}</flux:menu.radio>
+                    <flux:menu.radio>{{ auth()->user()->email }}</flux:menu.radio>
                 </flux:menu.radio.group>
                 <flux:menu.separator />
                 <form method="POST" action="{{ route('logout') }}" >
@@ -67,8 +59,8 @@
             <flux:profile avatar="/img/demo/user.png" />
             <flux:menu>
                 <flux:menu.radio.group>
-                    <flux:menu.radio checked>{{ auth()->user()->username }}</flux:menu.radio>
-                    <flux:menu.radio>Truly Delta</flux:menu.radio>
+                    <flux:menu.radio>{{ auth()->user()->lecturer->name }}</flux:menu.radio>
+                    <flux:menu.radio>{{ auth()->user()->email }}</flux:menu.radio>
                 </flux:menu.radio.group>
                 <flux:menu.separator />
                 <form method="POST" action="{{ route('logout') }}" >

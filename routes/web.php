@@ -36,4 +36,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
 Route::middleware(['auth', 'dosen'])->group(function () {
   Route::livewire('/dashboard/dosen/matkul', 'pages::dosen.matkul.index')->name('dosen.matkul.index');
   Route::livewire('/dashboard/dosen/matkul/create', 'pages::dosen.matkul.create')->name('dosen.matkul.create');
+  Route::livewire('/dashboard/dosen/matkul/{subject}/edit', 'pages::dosen.matkul.edit')->name('dosen.matkul.edit');
+
 });
