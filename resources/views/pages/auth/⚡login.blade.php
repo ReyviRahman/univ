@@ -20,7 +20,7 @@ new class extends Component {
             $role = Auth::user()->role;
             return match ($role) {
                 'admin' => $this->redirect(route('admin.fakultas.index'), navigate:true),
-                'lecturer' => $this->redirect(route(''), navigate:true),
+                'lecturer' => $this->redirect(route('dosen.matkul.index'), navigate:true),
                 'student' => $this->redirect(route(''), navigate:true),
             };
         }

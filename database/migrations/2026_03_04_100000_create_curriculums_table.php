@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('lecturers', function (Blueprint $table) {
+        Schema::create('curriculums', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->nullable()->constrained('users')->unique();
             $table->foreignId('department_id')->constrained('departments');
-            $table->string('nidn', 20)->unique();
-            $table->string('name');
-            $table->string('phone', 20)->nullable();
-            $table->enum('status', ['active', 'inactive', 'study_leave'])->default('active');
+            $table->string('name'); 
+            $table->integer('total_sks_graduation'); 
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('lecturers');
+        Schema::dropIfExists('curriculums');
     }
 };

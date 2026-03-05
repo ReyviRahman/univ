@@ -9,6 +9,7 @@ use App\Models\Lecturer; // <--- JANGAN LUPA IMPORT INI
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Subject;
 
 class DatabaseSeeder extends Seeder
 {
@@ -128,6 +129,71 @@ class DatabaseSeeder extends Seeder
                         'name' => $dosen['name'],
                         'phone' => $dosen['phone'],
                         'status' => 'active',
+                    ]
+                );
+            }
+        }
+
+        $dataMataKuliah = [
+            // Mata Kuliah Teknik Informatika (TI)
+            [
+                'code' => 'TI101',
+                'name' => 'Algoritma dan Pemrograman',
+                'sks' => 3,
+                'semester' => 1,
+                'is_active' => 1,
+                'dept_code' => 'TI',
+            ],
+            [
+                'code' => 'TI102',
+                'name' => 'Struktur Data',
+                'sks' => 3,
+                'semester' => 2,
+                'is_active' => 1,
+                'dept_code' => 'TI',
+            ],
+            // Mata Kuliah Sistem Informasi (SI)
+            [
+                'code' => 'SI101',
+                'name' => 'Pengantar Sistem Informasi',
+                'sks' => 2,
+                'semester' => 1,
+                'is_active' => 1,
+                'dept_code' => 'SI',
+            ],
+            // Mata Kuliah Manajemen (MN)
+            [
+                'code' => 'MN101',
+                'name' => 'Pengantar Manajemen',
+                'sks' => 3,
+                'semester' => 1,
+                'is_active' => 1,
+                'dept_code' => 'MN',
+            ],
+            [
+                'code' => 'MN102',
+                'name' => 'Matematika Ekonomi',
+                'sks' => 2,
+                'semester' => 1,
+                'is_active' => 0, // Contoh data yang tidak aktif
+                'dept_code' => 'MN',
+            ],
+        ];
+
+        foreach ($dataMataKuliah as $mk) {
+            // Cari Department ID berdasarkan Kode Prodi
+            $dept = Department::where('code', $mk['dept_code'])->first();
+
+            // Hanya proses jika prodi ditemukan
+            if ($dept) {
+                Subject::updateOrCreate(
+                    ['code' => $mk['code']], // Patokan cek unik adalah kode mata kuliah
+                    [
+                        'department_id' => $dept->id, // Relasi ke tabel departments
+                        'name' => $mk['name'],
+                        'sks' => $mk['sks'],
+                        'semester' => $mk['semester'],
+                        'is_active' => $mk['is_active'],
                     ]
                 );
             }
