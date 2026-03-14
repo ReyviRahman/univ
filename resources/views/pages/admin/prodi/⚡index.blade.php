@@ -12,7 +12,7 @@ new #[Layout('layouts::admin')] class extends Component
 
     #[Computed]
     public function departments() {
-        return Department::latest()->paginate(10);
+        return Department::with('faculty')->latest()->paginate(10);
     }
 
     public function delete(Department $department) {

@@ -11,9 +11,14 @@ new #[Layout('layouts::dosen')] class extends Component
 {
     use WithPagination;
 
+    // #[Computed]
+    // public function subjects() {
+    //     return Subject::latest()->paginate(10);
+    // }
+
     #[Computed]
     public function subjects() {
-        return Subject::latest()->paginate(10);
+        return auth()->user()->lecturer->department->subjects()->paginate(10);
     }
 
     public function delete(Subject $subject) {
