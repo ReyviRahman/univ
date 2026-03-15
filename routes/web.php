@@ -21,16 +21,16 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth', 'admin'])->group(function () {
   Route::livewire('/dashboard/admin/fakultas', 'pages::admin.fakultas.index')->name('admin.fakultas.index');
-
   Route::livewire('/dashboard/admin/fakultas/create', 'pages::admin.fakultas.create')->name('admin.fakultas.create');
-
   Route::livewire('/dashboard/admin/fakultas/{faculty}/edit', 'pages::admin.fakultas.edit')->name('admin.fakultas.edit');
 
   Route::livewire('/dashboard/admin/prodi', 'pages::admin.prodi.index')->name('admin.prodi.index');
-
   Route::livewire('/dashboard/admin/prodi/create', 'pages::admin.prodi.create')->name('admin.prodi.create');
-
   Route::livewire('/dashboard/admin/prodi/{department}/edit', 'pages::admin.prodi.edit')->name('admin.prodi.edit');
+
+  Route::livewire('/dashboard/admin/academic-period', 'pages::admin.periode-akademik.index')->name('admin.academic-period.index');
+  Route::livewire('/dashboard/admin/academic-period/create', 'pages::admin.periode-akademik.create')->name('admin.academic-period.create');
+  Route::livewire('/dashboard/admin/academic-period/{academicPeriod}/edit', 'pages::admin.periode-akademik.edit')->name('admin.academic-period.edit');
 });
 
 Route::middleware(['auth', 'dosen'])->group(function () {

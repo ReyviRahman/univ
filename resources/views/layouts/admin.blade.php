@@ -24,6 +24,14 @@
         </flux:sidebar.header>
         <flux:sidebar.nav>
             <flux:sidebar.item 
+                icon="calendar-sync" 
+                href="{{ route('admin.academic-period.index') }}" 
+                :current="request()->routeIs('admin.academic-period.*')"
+                wire:navigate
+            >
+                Periode Akademik
+            </flux:sidebar.item>
+            <flux:sidebar.item 
                 icon="university" 
                 href="{{ route('admin.fakultas.index') }}" 
                 :current="request()->routeIs('admin.fakultas.*')"

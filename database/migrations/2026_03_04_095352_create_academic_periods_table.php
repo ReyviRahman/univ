@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('academic_year'); 
             $table->enum('semester_type', ['ganjil', 'genap']); 
-            $table->string('name'); 
             $table->boolean('is_active')->default(false); 
             $table->timestamps();
         });

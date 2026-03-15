@@ -59,7 +59,7 @@ new #[Layout('layouts::admin')] class extends Component
 
         <flux:table.rows>
             @forelse ($this->departments as $department)
-            <flux:table.row>
+            <flux:table.row wire:key="department-{{ $department->id }}">
                 <flux:table.cell class="ps-2!">
                     {{ $this->departments->firstItem() + $loop->index }}
                 </flux:table.cell>
